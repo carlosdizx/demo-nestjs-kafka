@@ -21,7 +21,7 @@ const bootstrap = async () => {
       client: {
         clientId: 'billing',
         brokers: ['localhost:9092'],
-        // Not required for demo
+        // In local not required others properties
         // ssl: true,
         // sasl: {
         //   mechanism: 'plain',
