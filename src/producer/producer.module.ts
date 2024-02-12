@@ -3,9 +3,11 @@ import ProducerService from './producer.service';
 import ProducerController from './producer.controller';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { Partitioners } from 'kafkajs';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule,
     ClientsModule.register([
       {
         name: 'KAFKA',

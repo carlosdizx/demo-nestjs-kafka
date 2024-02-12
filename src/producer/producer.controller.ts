@@ -1,19 +1,15 @@
-import { Body, Controller, Inject, Logger, Post } from '@nestjs/common';
-import ProducerService from './producer.service';
-import { ClientProxy, MessagePattern, Payload } from '@nestjs/microservices';
-
-const TOPIC = 'YAPE_TRANSACTIONS';
+import { Body, Controller, Inject, Post } from '@nestjs/common';
+import { ClientProxy } from '@nestjs/microservices';
+import { ConfigService } from '@nestjs/config';
 
 @Controller('producer')
 export default class ProducerController {
+  private readonly topic: string;
   constructor(
-    private readonly producerService: ProducerService,
     @Inject('KAFKA') private readonly kafka: ClientProxy,
-  ) {}
-
-  @MessagePattern(`${TOPIC}`)
-  public catchMessage(@Payload() payload: any) {
-    Logger.log(payload, ProducerController.name);
+    private readonly configService: ConfigService,
+  ) {
+    this.topic = this.configService.getOrThrow('KAFKA_TOPIC_1');
   }
 
   @Post('send')
@@ -21,7 +17,6 @@ export default class ProducerController {
     @Body('message') message: string,
     @Body('user') user: string,
   ) {
-    Logger.log(TOPIC, '<====');
-    return this.kafka.emit(TOPIC, { message, user });
+    return this.kafka.emit(this.topic, { message, user });
   }
 }
