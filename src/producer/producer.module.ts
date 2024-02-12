@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common';
-import ProducerService from './producer.service';
 import ProducerController from './producer.controller';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { Partitioners } from 'kafkajs';
@@ -25,6 +24,5 @@ import { ConfigModule } from '@nestjs/config';
     ]),
   ],
   controllers: [ProducerController],
-  providers: [ProducerService],
 })
 export default class ProducerModule {}
