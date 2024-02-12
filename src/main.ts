@@ -15,6 +15,9 @@ const bootstrap = async () => {
     name: 'KAFKA_SERVICE_YAPE',
     transport: Transport.KAFKA,
     options: {
+      subscribe: {
+        fromBeginning: true,
+      },
       consumer: {
         groupId: 'kafka-consumer',
       },
